@@ -101,6 +101,11 @@ void setup()
     	request->send_P(200, "text/html", index_html);
 	});
 
+	server.on("/css.css", HTTP_GET, [](AsyncWebServerRequest *request)
+    {
+      request->send_P(200, "text/css", index_css);
+    });
+
   	// Send a GET request to <ESP_IP>/get?state=<inputMessage>
   	server.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) 
   	{
