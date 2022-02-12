@@ -7,12 +7,12 @@ const char index_html[] PROGMEM = R"rawliteral(
   <H2>LED Gate 1</H2>
   <div class="container">
     <div class="item">
-    <form action="/get">
-      Manual input: <input type="text" name="input3">
-      <input type="submit" value="Submit">
-    </form>
+      <form action="/get">
+        Manual input: <input type="text" name="input3">
+        <input type="submit" value="Submit">
+      </form>
     </div>
-    <form action="/get" id="huts">
+    <form id="huts">
       <label for="hut1">Color:</label>
       <select id="hut1" name="hut1">
         <option value="red">Red</option>
@@ -23,18 +23,20 @@ const char index_html[] PROGMEM = R"rawliteral(
         <option value="off">off</option>
       </select>
       <input type="submit" value="Submit" onClick="submit_col()">
+      </form>
     </div>
     <div class="item">
-      <label for="hut2">Patten:</label>
-      <select id="hut2" name="hut2">
-        <option value="Color">Color</option>
-        <option value="Flash">Flash</option>
-        <option value="Ranbow">Ranbow</option>
-        <option value="Juggle">Juggle</option>
-      </select>
-      <input type="submit" value="Submit" onClick="submit_pat()">
+      <form id="huts">
+        <label for="hut2">Patten:</label>
+        <select id="hut2" name="hut2">
+          <option value="Color">Color</option>
+          <option value="Flash">Flash</option>
+          <option value="Ranbow">Ranbow</option>
+          <option value="Juggle">Juggle</option>
+        </select>
+        <input type="submit" value="Submit" onClick="submit_pat()">
+      </form>
     </div>
-    </form>
     <div class="item">
       <label for="b">LED Brightness: &nbsp;&nbsp; </label>
       <input type="range" min="0" max="255" value="96" class="slider" id="b">
