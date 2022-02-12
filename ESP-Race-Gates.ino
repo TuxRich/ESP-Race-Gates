@@ -10,7 +10,7 @@ FASTLED_USING_NAMESPACE
 #define DATA_PIN    2
 #define LED_TYPE    WS2811
 #define COLOR_ORDER GRB
-#define NUM_LEDS    47				 // 47 for gate 1, 209 for gate 2
+#define NUM_LEDS    48				 // 48 for gate 1, 209 for gate 2
 CRGB leds[NUM_LEDS];
 bool     flashing;
 const uint8_t FLASH_DURATION = 1000; // milliseconds
