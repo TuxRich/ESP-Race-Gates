@@ -30,6 +30,7 @@ CRGB Green = CRGB(0, 255, 0);
 CRGB Red = CRGB(255, 0, 0);
 CRGB Blue = CRGB(0, 0, 255);
 CRGB Purple = CRGB(153, 0, 76);
+CRGB Yellow = CRGB(255, 120, 0);
 CRGB none = CRGB(0, 0, 0);
 
 CRGB co = none;
@@ -142,6 +143,8 @@ void setup() {
           co = Green;
         else if(col == "blue")
           co = Blue;
+         else if(col == "yellow")
+          co = Yellow;
         else if(col == "purple")
           co = Purple;
         else if(col == "off")
