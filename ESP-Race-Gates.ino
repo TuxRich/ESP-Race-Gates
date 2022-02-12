@@ -71,21 +71,28 @@ void setup()
   	WiFi.config(apIP, gateway, subnet);
   	WiFi.begin(ssid, password);
 
+
 	for( int i = 0; i < NUM_LEDS; ++i) 
 	{
-    	leds[i] = CRGB(255, 0, 0);
+		leds[i] = CRGB(255, 0, 0);
 	}
-  	FastLED.show();
+	FastLED.show();
+	lastMeasureTime = millis();
 	while (WiFi.status() != WL_CONNECTED) 
 	{
-    	delay(500);
-    	Serial.print(".");
-  	}
-  	for( int i = 0; i < NUM_LEDS; ++i) 
-  	{
-    	leds[i] = CRGB(0, 255, 0);
-  	}
-  	FastLED.show();
+		delay(500);
+		Serial.print(".");
+		if (millis() - lastMeasureTime > 5000) 
+		{
+			patten = 1;
+			break;
+		}
+	}
+	for( int i = 0; i < NUM_LEDS; ++i) 
+	{
+		leds[i] = CRGB(0, 255, 0);
+		}
+	FastLED.show();
 
   
   	// Send web page with input fields to client
