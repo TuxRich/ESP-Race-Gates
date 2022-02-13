@@ -1,6 +1,7 @@
 
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
@@ -200,6 +201,10 @@ void setup()
           			flashing = false;
         		}
       		}
+      		else if(c == "config")
+      		{
+      			GetConfig();
+      		}
       		else
       		{
         		Serial.println(inputMessage);
@@ -313,4 +318,29 @@ void juggle()
     	leds[beatsin16( i+7, 0, NUM_LEDS-1 )] |= CHSV(dothue, 200, 255);
     	dothue += 32;
   	}
+}
+
+Void GetConfig()
+{	
+	WiFiClient client;
+	HTTPClient http;
+	String serverPath = "http://10.10.10.1/get-config";
+
+	http.begin(client, serverPath.c_str());
+	// Send HTTP GET request
+    int httpResponseCode = http.GET();
+
+    if (httpResponseCode>0) {
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
+        String payload = http.getString();
+        Serial.println(payload);
+      }
+      else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+      }
+
+	// Free resources
+	http.end();
 }
