@@ -320,7 +320,7 @@ void juggle()
   	}
 }
 
-Void GetConfig()
+void GetConfig()
 {	
 	WiFiClient client;
 	HTTPClient http;
