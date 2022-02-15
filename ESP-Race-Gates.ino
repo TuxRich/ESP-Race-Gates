@@ -37,7 +37,8 @@ CRGB Purple = CRGB(153, 0, 76);
 CRGB Yellow = CRGB(255, 120, 0);
 CRGB none 	= CRGB(0, 0, 0);
 
-CRGB co = none;
+CRGB co    = none;
+String col = "green";
 
 AsyncWebServer server(80);
 
@@ -154,7 +155,7 @@ void setup()
       		else if(c == "c")
       		{
         		Serial.println(inputMessage);
-        		String col = getValue(inputMessage, ':', 1);
+        		col = getValue(inputMessage, ':', 1);
         		if(col == "red")
           			co = Red;
         		else if(col == "green")
@@ -222,9 +223,9 @@ void setup()
       		}
       		else
       		{
-        		Serial.println(inputMessage);
-        		leds[0]  = CRGB(0, 0, 255);
-        		FastLED.show();
+        		//Serial.println(inputMessage);
+        		//leds[0]  = CRGB(0, 0, 255);
+        		//FastLED.show();
       		}		
     	}
     	else 
@@ -258,7 +259,6 @@ void loop()
       	FastLED.setBrightness(BRIGHTNESS + 60);
       	lastMeasureTime = millis();
       	FastLED.show();
-      	Serial.println(pulse_gap);
       }
       if(millis() - lastMeasureTime > 100 && millis() - lastMeasureTime < 110)
       {
@@ -380,5 +380,21 @@ String processor(const String& var)
 {
   if(var == "BRIGHTNESS")
     return String(BRIGHTNESS);
+  else if(var == "C1")
+  {
+    return col;
+  }
+  else if(var == "P2")
+  {
+  	if(flashing)
+  		return "Flash";
+  	else if(patten == 0)
+  		return "Color";
+  	else if(patten == 1)
+  		return "Ranbow"
+  	else if(patten == 2)
+  		return "Juggle"
+    return freq2;
+  }
   return String();
 }
