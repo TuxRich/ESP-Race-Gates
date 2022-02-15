@@ -38,8 +38,8 @@ const char index_html[] PROGMEM = R"rawliteral(
       </form>
     </div>
     <div class="item">
-      <label for="b">LED Brightness: &nbsp;&nbsp; </label>
-      <input type="range" min="0" max="255" value="96" class="slider" id="b">
+      <label for="b">LED Brightness: </label>
+      <input type="range" min="0" max="195" value="%BRIGHTNESS%" class="slider" id="b">
       <input type="submit" value="Set" onClick="submit_Brightness()">
     </div>
   </div>

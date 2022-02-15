@@ -21,14 +21,17 @@ bool a = true;
 uint8_t patten = 0;
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
 
-#define BRIGHTNESS          96
+bool    pulse = true;
+int pulse_gap = 5000; // milliseconds
+
+uint8_t BRIGHTNESS      =  96;
 #define FRAMES_PER_SECOND  60
 
 bool RaceStart = false;
 
 
 CRGB Green 	= CRGB(0, 255, 0);
-CRGB Red 	= CRGB(255, 0, 0);
+CRGB Red 		= CRGB(255, 0, 0);
 CRGB Blue 	= CRGB(0, 0, 255);
 CRGB Purple = CRGB(153, 0, 76);
 CRGB Yellow = CRGB(255, 120, 0);
@@ -61,17 +64,16 @@ void setup()
 {
 	Serial.begin(9600);
 
-  	FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS);
-  	FastLED.setBrightness(BRIGHTNESS);
+	FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS);
+	FastLED.setBrightness(BRIGHTNESS);
 	lastMeasureTime = 0;
-  	flashing        = false;
+	flashing        = false;
  
-  	//WiFi.mode(WIFI_AP_STA);
-  	//WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
-  	//WiFi.softAP(ssid, password);
-  	WiFi.config(apIP, gateway, subnet);
-  	WiFi.begin(ssid, password);
-
+	//WiFi.mode(WIFI_AP_STA);
+	//WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
+	//WiFi.softAP(ssid, password);
+	WiFi.config(apIP, gateway, subnet);
+	WiFi.begin(ssid, password);
 
 	for( int i = 0; i < NUM_LEDS; ++i) 
 	{
@@ -99,7 +101,7 @@ void setup()
   	// Send web page with input fields to client
   	server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
   	{
-    	request->send_P(200, "text/html", index_html);
+    	request->send_P(200, "text/html", index_html, processor);
 	});
 
 	server.on("/css.css", HTTP_GET, [](AsyncWebServerRequest *request)
@@ -172,8 +174,8 @@ void setup()
       		}
       		else if(c == "b")
       		{
-        		int Bright = getValue(inputMessage, ':', 1).toInt();
-        		FastLED.setBrightness(Bright);
+        		BRIGHTNESS = getValue(inputMessage, ':', 1).toInt();
+        		FastLED.setBrightness(BRIGHTNESS);
         		FastLED.show();
       		}
       		else if(c == "p")
@@ -205,6 +207,19 @@ void setup()
       		{
       			GetConfig();
       		}
+      		else if(c == "sync")
+      		{
+      			gHue = 0;
+      			lastMeasureTime = millis();
+      		}
+      		else if(c == "pulse")
+      		{
+      			pulse_gap = getValue(inputMessage, ':', 1).toInt();
+      			if(pulse_gap > 0)
+      				pulse = true;
+      			else
+      				pulse = false;
+      		}
       		else
       		{
         		Serial.println(inputMessage);
@@ -235,6 +250,22 @@ void loop()
   	}
   	else
   	{
+  	}
+  	if(pulse)
+  	{
+  		if (millis() - lastMeasureTime > pulse_gap) 
+      {
+      	FastLED.setBrightness(BRIGHTNESS + 60);
+      	lastMeasureTime = millis();
+      	FastLED.show();
+      	Serial.println(pulse_gap);
+      }
+      if(millis() - lastMeasureTime > 100 && millis() - lastMeasureTime < 110)
+      {
+      	FastLED.setBrightness(BRIGHTNESS);
+      	FastLED.show();
+      }
+
   	}
   	if (flashing) 
   	{
@@ -343,4 +374,11 @@ void GetConfig()
 
 	// Free resources
 	http.end();
+}
+
+String processor(const String& var)
+{
+  if(var == "BRIGHTNESS")
+    return String(BRIGHTNESS);
+  return String();
 }
