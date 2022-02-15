@@ -42,6 +42,9 @@ const char index_html[] PROGMEM = R"rawliteral(
       <input type="range" min="0" max="195" value="%BRIGHTNESS%" class="slider" id="b">
       <input type="submit" value="Set" onClick="submit_Brightness()">
     </div>
+    <div class="item">
+      <input type="submit" value="Sync" onClick="submit_Sync()">
+    </div>
   </div>
 <div id="main"></div>
 
@@ -85,6 +88,19 @@ function submit_Brightness()
     document.querySelector('#main').innerHTML = body;
   });
 }
+function submit_Sync()
+{
+  console.log('get?input3=sync');
+  fetch('get?input3=sync');
+}
+function selectElement(id, valueToSelect) {    
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+}
+
+selectElement('hut1', '%C1%')
+selectElement('hut2', '%P1%')
+
 </script>
 </body></html>
 )rawliteral";
