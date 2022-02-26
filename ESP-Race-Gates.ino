@@ -6,12 +6,22 @@
 #include <ESPAsyncWebServer.h>
 #include <FastLED.h>
 
+
+#define GATE    1
 //LED stuff
 FASTLED_USING_NAMESPACE
 #define DATA_PIN    2
 #define LED_TYPE    WS2811
 #define COLOR_ORDER GRB
-#define NUM_LEDS    48				 // 48 for gate 1, 109 for gate 2, 108 for 3
+
+#if GATE == 1
+    #define NUM_LEDS    48
+#elif GATE == 2
+    #define NUM_LEDS    109
+#elif GATE == 3
+    #define NUM_LEDS    108
+#endif
+//#define NUM_LEDS    48				 // 48 for gate 1, 109 for gate 2, 108 for 3
 CRGB leds[NUM_LEDS];
 bool     flashing;
 const uint8_t FLASH_DURATION = 1000; // milliseconds
@@ -381,9 +391,7 @@ String processor(const String& var)
   if(var == "BRIGHTNESS")
     return String(BRIGHTNESS);
   else if(var == "C1")
-  {
     return col;
-  }
   else if(var == "P2")
   {
   	if(flashing)
@@ -395,5 +403,7 @@ String processor(const String& var)
   	else if(patten == 2)
   		return "Juggle";
   }
+  else if(var == "GATE")
+    return String(GATE);
   return String();
 }
