@@ -7,7 +7,7 @@
 #include <FastLED.h>
 
 
-#define GATE    1
+#define GATE    4
 //LED stuff
 FASTLED_USING_NAMESPACE
 #define DATA_PIN    2
@@ -20,6 +20,8 @@ FASTLED_USING_NAMESPACE
     #define NUM_LEDS    109
 #elif GATE == 3
     #define NUM_LEDS    108
+#elif GATE == 4
+    #define NUM_LEDS    250
 #endif
 //#define NUM_LEDS    48				 // 48 for gate 1, 109 for gate 2, 108 for 3
 CRGB leds[NUM_LEDS];
@@ -61,6 +63,8 @@ const char* password = "11111111112222222222bbbbbb";
     IPAddress   apIP(10, 10, 10, 12);
 #elif GATE == 3
     IPAddress   apIP(10, 10, 10, 13);
+#elif GATE == 4
+    IPAddress   apIP(10, 10, 10, 14);
 #endif
 //IPAddress   apIP(10, 10, 10, 11);		//Gate 1 = 10.10.10.11, Gate 2 = 10.10.10.12, Gate 3 = 10.10.10.13
 IPAddress   gateway(10, 10, 10, 1);
