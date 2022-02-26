@@ -11,7 +11,7 @@ FASTLED_USING_NAMESPACE
 #define DATA_PIN    2
 #define LED_TYPE    WS2811
 #define COLOR_ORDER GRB
-#define NUM_LEDS    48				 // 48 for gate 1, 209 for gate 2
+#define NUM_LEDS    48				 // 48 for gate 1, 109 for gate 2, 108 for 3
 CRGB leds[NUM_LEDS];
 bool     flashing;
 const uint8_t FLASH_DURATION = 1000; // milliseconds
@@ -45,7 +45,7 @@ AsyncWebServer server(80);
 // REPLACE WITH YOUR NETWORK CREDENTIALS
 const char* ssid = "Race Net";
 const char* password = "11111111112222222222bbbbbb";
-IPAddress   apIP(10, 10, 10, 11);		//Gate 1 = 10.10.10.11, Gate 2 = 10.10.10.12
+IPAddress   apIP(10, 10, 10, 11);		//Gate 1 = 10.10.10.11, Gate 2 = 10.10.10.12, Gate 3 = 10.10.10.13
 IPAddress   gateway(10, 10, 10, 1);
 IPAddress   subnet(255, 255, 255, 0);
 
@@ -391,10 +391,9 @@ String processor(const String& var)
   	else if(patten == 0)
   		return "Color";
   	else if(patten == 1)
-  		return "Ranbow"
+  		return "Ranbow";
   	else if(patten == 2)
-  		return "Juggle"
-    return freq2;
+  		return "Juggle";
   }
   return String();
 }
