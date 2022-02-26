@@ -55,7 +55,14 @@ AsyncWebServer server(80);
 // REPLACE WITH YOUR NETWORK CREDENTIALS
 const char* ssid = "Race Net";
 const char* password = "11111111112222222222bbbbbb";
-IPAddress   apIP(10, 10, 10, 11);		//Gate 1 = 10.10.10.11, Gate 2 = 10.10.10.12, Gate 3 = 10.10.10.13
+#if GATE == 1
+    IPAddress   apIP(10, 10, 10, 11);
+#elif GATE == 2
+    IPAddress   apIP(10, 10, 10, 12);
+#elif GATE == 3
+    IPAddress   apIP(10, 10, 10, 13);
+#endif
+//IPAddress   apIP(10, 10, 10, 11);		//Gate 1 = 10.10.10.11, Gate 2 = 10.10.10.12, Gate 3 = 10.10.10.13
 IPAddress   gateway(10, 10, 10, 1);
 IPAddress   subnet(255, 255, 255, 0);
 
