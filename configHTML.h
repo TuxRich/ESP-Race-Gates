@@ -4,7 +4,7 @@ const char index_html[] PROGMEM = R"rawliteral(
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css.css">
   </head><body>
-  <H2>LED Gate 1</H2>
+  <H2>LED Gate %GATE%</H2>
   <div class="container">
     <div class="item">
       <form action="/get">
